@@ -1,0 +1,8 @@
+allowBuilds:
+  '@parcel/watcher': true
+  unrs-resolver: true
+minimumReleaseAgeExclude:
+  - browserslist@4.29.1
+overrides:
+  baseline-browser-mapping: 2.11.20
+  electron-to-chromium: 1.5.420
