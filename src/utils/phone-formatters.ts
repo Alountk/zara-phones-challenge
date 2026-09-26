@@ -1,10 +1,7 @@
 const changeHttpToHttps = (url: string): string => {
-  if (typeof url === 'string' && url.startsWith('http://')) {
-    return url.replace('http://', 'https://');
-  }
-  if (typeof url === 'string' && url.startsWith('https://')) {
-    return url;
-  }
+  if (typeof url !== 'string') return '';
+  if (url.startsWith('https://')) return url;
+  if (url.startsWith('http://')) return url.replace('http://', 'https://');
   return '';
 };
 
