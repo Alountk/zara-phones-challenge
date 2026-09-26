@@ -8,9 +8,10 @@ const eslintConfig = defineConfig([
   ...nextTs,
   prettierConfig,
   {
-    files: ["jest.config.js", "jest.setup.js"],
+    files: ["jest.config.js", "jest.setup.js", "**/*.test.ts", "**/*.test.tsx"],
     rules: {
       "@typescript-eslint/no-require-imports": "off",
+      "@typescript-eslint/no-explicit-any": "off",
     },
   },
   // Override default ignores of eslint-config-next.
