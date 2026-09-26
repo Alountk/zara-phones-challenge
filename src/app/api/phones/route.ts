@@ -16,7 +16,8 @@ export async function GET(request: Request) {
   });
   if (search) params.set('search', search);
 
-  const res = await fetch(`${PHONES_API_BASE_URL}/products?${params.toString()}`, {
+  const url = `${PHONES_API_BASE_URL}/products?${params.toString()}`;
+  const res = await fetch(url, {
     headers: { 'x-api-key': PHONES_API_KEY },
   });
 
