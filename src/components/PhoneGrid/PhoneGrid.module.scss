@@ -1,10 +1,27 @@
 @use '../../styles/mixins' as *;
 
+.phone-list-section {
+  display: flex;
+  flex-direction: column;
+  padding-top: 28px;
+  padding-bottom: 28px;
+  @include mobile {
+    padding-left: var(--spacing-md);
+    padding-right: var(--spacing-md);
+  }
+  @include tablet {
+    padding-left: var(--spacing-xl);
+    padding-right: var(--spacing-xl);
+  }
+  @include desktop {
+    padding-left: var(--spacing-xxl);
+    padding-right: var(--spacing-xxl);
+  }
+}
+
 .phone-grid {
   display: grid;
   gap: 0;
-  padding-top: 28px;
-  padding-bottom: 28px;
   width: 100%;
 
   > a {
@@ -15,18 +32,12 @@
   }
   @include mobile {
     grid-template-columns: 1fr;
-    padding-left: var(--spacing-md);
-    padding-right: var(--spacing-md);
   }
   @include tablet {
     grid-template-columns: repeat(2, 1fr);
-    padding-left: var(--spacing-xl);
-    padding-right: var(--spacing-xl);
   }
   @include desktop {
     grid-template-columns: repeat(5, 1fr);
-    padding-left: var(--spacing-xxl);
-    padding-right: var(--spacing-xxl);
   }
 }
 
