@@ -1,4 +1,5 @@
 import { PhoneSummary } from '@/types/phone';
+import { dedupeById } from '@/utils/phone-formatters';
 import { NextResponse } from 'next/server';
 
 const PHONES_API_BASE_URL = process.env.PHONES_API_BASE_URL as string;
@@ -31,12 +32,7 @@ export async function GET(request: Request) {
   const phones: PhoneSummary[] = await res.json();
 
   // Control the duplication of phones with the same id
-  const seen = new Set<string>();
-  const dedupedPhones = phones.filter((phone) => {
-    if (seen.has(phone.id)) return false;
-    seen.add(phone.id);
-    return true;
-  });
+  const dedupedPhones = dedupeById(phones);
 
   return NextResponse.json(dedupedPhones);
 }
