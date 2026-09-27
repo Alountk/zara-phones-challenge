@@ -4,7 +4,13 @@ import Image from 'next/image';
 import Link from 'next/link';
 import styles from './PhoneCard.module.scss';
 
-export default function PhoneCard({ phone }: { phone: NormalizedPhoneSummary }) {
+export default function PhoneCard({
+  phone,
+  isPriority,
+}: {
+  phone: NormalizedPhoneSummary;
+  isPriority: boolean;
+}) {
   return (
     <Link href={`/phone/${phone.id}`}>
       <article className={styles['card']}>
@@ -14,6 +20,7 @@ export default function PhoneCard({ phone }: { phone: NormalizedPhoneSummary }) 
               src={phone.imageUrl}
               alt={phone.name}
               fill
+              priority={isPriority}
               sizes="(max-width: 599px) 100vw, (max-width: 1023px) 50vw, 20vw"
               style={{ maxWidth: '100%', objectFit: 'contain' }}
             />

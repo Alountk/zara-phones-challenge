@@ -30,8 +30,8 @@ export default function PhoneGrid({
 
   return (
     <section className={styles['phone-grid']}>
-      {phones.map((phone) => (
-        <PhoneCard key={phone.id} phone={phone} />
+      {phones.map((phone, index) => (
+        <PhoneCard key={phone.id} phone={phone} isPriority={index <= 4} />
       ))}
     </section>
   );
