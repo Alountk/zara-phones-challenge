@@ -9,7 +9,9 @@ export default function Navbar() {
       <Link href="/">
         <Image src="/logo/mbst-logo.svg" alt="MBST" height={29} width={77} priority />
       </Link>
-      <Image src="/logo/cart.svg" alt="cart" height={18} width={18} priority />
+      <Link href="/cart">
+        <Image src="/logo/cart.svg" alt="cart" height={16} width={13} priority />0
+      </Link>
     </nav>
   );
 }

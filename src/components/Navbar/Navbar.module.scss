@@ -19,4 +19,13 @@
     padding-left: var(--spacing-xxl);
     padding-right: var(--spacing-xxl);
   }
+  a {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-md);
+    line-height: var(--line-height-md);
+    font-weight: 300;
+  }
 }
