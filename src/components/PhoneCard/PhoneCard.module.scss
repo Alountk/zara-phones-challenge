@@ -5,15 +5,14 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   gap: 24px;
+  width: 100%;
+  aspect-ratio: 1 / 1;
 
-  height: 344px;
-  width: 344px;
   padding: var(--spacing-md);
-
-  border: 0.5px solid var(--color-border);
+  border: var(--border-width-hairline) solid var(--color-border);
 
   &::before {
     content: '';
@@ -25,10 +24,6 @@
     z-index: 1;
   }
 
-  img {
-    position: relative;
-    z-index: 2;
-  }
   .phone-brand,
   .phone-name,
   .phone-price,
@@ -52,11 +47,18 @@
   }
 }
 
+.phone-image-wrapper {
+  position: relative;
+  height: stretch;
+  width: stretch;
+  z-index: 2;
+}
+
 .phone-image-placeholder {
   position: relative;
   z-index: 2;
-  width: 312px;
-  height: 257px;
+  width: 100%;
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -92,5 +94,6 @@
 
 .phone-price {
   display: flex;
-  align-items: end;
+  align-items: flex-end;
+  white-space: nowrap;
 }
