@@ -13,22 +13,25 @@ A web application for browsing, searching and managing a shopping cart of mobile
 
 ## Architecture
 
-This project uses a **BFF (Backend For Frontend)** pattern to fulfil the "Backend: Node 18" requirement without exposing the external API's `x-api-key` to the browser:
+This project uses a **BFF (Backend For Frontend)** pattern to fulfil the "Backend: Node 18" requirement without exposing the external API's `x-api-key` to the browser. The key insight is that "backend" in Next.js doesn't mean "must be a Route Handler" — it means "code that runs on the server, never shipped to the client bundle". Both Route Handlers and Server Components satisfy that:
 
 ```
-Client Component (search, etc.)
-  → fetch('/api/phones?search=...', { signal })     // own endpoint, no key
-     → src/app/api/phones/route.ts (Next.js Route Handler, runs on Node 18)
-        → fetch('https://prueba-tecnica-api-tienda-moviles.onrender.com/products...', { headers: { x-api-key } })
+Server Component (page.tsx, no "use client")
+→ getPhonesFromExternalApi(search) [src/services/phones-server.ts, server-only]
+→ fetch('https://prueba-tecnica-api-tienda-moviles.onrender.com/products...', { headers: { x-api-key } })
 ```
 
-The Route Handlers are also responsible for **data correction** before the response reaches any component — the external API has known inconsistencies (see below), so raw data is cleaned at this boundary rather than trusted downstream:
+Since the listing page's search is driven entirely by URL search params (rather than client-side state), there is no Client Component that ever needs to fetch phone data — the only consumer is `page.tsx`, a Server Component. Calling `getPhonesFromExternalApi` directly avoids Node making a self-referential HTTP call to its own API just to fetch data it could resolve in-process, and it stays exactly as secure as a Route Handler: `phones-server.ts` imports the `server-only` package, so an accidental import from a Client Component fails the build instead of leaking the key into the browser bundle.
+
+This function is also responsible for **data correction** before the response reaches any component — the external API has known inconsistencies (see below), so raw data is cleaned at this boundary rather than trusted downstream:
 
 - **Deduplication** — the external API returns at least one duplicate `id` in `/products`.
 - **Price normalization** — `basePrice` can contain decimals (e.g. `553.31`); invalid/non-numeric prices are normalized to `null` rather than a misleading `0`.
 - **URL normalization** — images are served over `http://`; normalized to `https://` to avoid mixed-content issues once deployed.
 
 These corrections live in `src/utils/phone-formatters.ts` as pure, unit-tested functions, decoupled from any HTTP concern. Presentation-only formatting (e.g. turning a `number` into `"619 EUR"`) is intentionally **not** done at this layer — it happens in the UI components, so the raw numeric value stays available for business logic (like summing the cart total).
+
+Errors from the external API surface as a typed `ExternalApiError` (`src/services/errors.ts`, carrying the original HTTP status), which the Server Component can let bubble up to Next's nearest `error.tsx` boundary rather than parsing a generic message string.
 
 ## Getting started
 
