@@ -14,6 +14,7 @@ export default function PhoneCard({ phone }: { phone: NormalizedPhoneSummary }) 
               src={phone.imageUrl}
               alt={phone.name}
               fill
+              sizes="(max-width: 599px) 100vw, (max-width: 1023px) 50vw, 20vw"
               style={{ maxWidth: '100%', objectFit: 'contain' }}
             />
           </div>
