@@ -1,4 +1,4 @@
-import { changeHttpToHttps, dedupeById, normalizePrice } from './phone-formatters';
+import { changeHttpToHttps, dedupeById, formatPrice, normalizePrice } from './phone-formatters';
 
 describe('when change http to https', () => {
   it('http is empty return empty string', () => {
@@ -116,5 +116,16 @@ describe('dedupeById', () => {
       { id: 'SMG-A25', name: 'Galaxy A25 5G' },
       { id: 'GPX-8A', name: 'Pixel 8a' },
     ]);
+  });
+});
+
+describe('formatPrice', () => {
+  it('when the price is null return not available', () => {
+    const result = formatPrice(null);
+    expect(result).toBe('Price unavailable');
+  });
+  it('when the prices are valid return with EUR currency', () => {
+    const result = formatPrice(699);
+    expect(result).toBe('699 EUR');
   });
 });
