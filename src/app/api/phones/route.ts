@@ -1,5 +1,5 @@
-import { PhoneSummary } from '@/types/phone';
-import { dedupeById } from '@/utils/phone-formatters';
+import { NormalizedPhoneSummary, PhoneSummary } from '@/types/phone';
+import { changeHttpToHttps, dedupeById, normalizePrice } from '@/utils/phone-formatters';
 import { NextResponse } from 'next/server';
 
 const PHONES_API_BASE_URL = process.env.PHONES_API_BASE_URL as string;
@@ -7,7 +7,9 @@ const PHONES_API_KEY = process.env.PHONES_API_KEY as string;
 
 const DEFAULT_PAGE_SIZE = 20;
 
-export async function GET(request: Request) {
+export async function GET(
+  request: Request,
+): Promise<NextResponse<NormalizedPhoneSummary[] | { error: string }>> {
   const { searchParams } = new URL(request.url);
   const search = searchParams.get('search');
 
@@ -34,5 +36,12 @@ export async function GET(request: Request) {
   // Control the duplication of phones with the same id
   const dedupedPhones = dedupeById(phones);
 
-  return NextResponse.json(dedupedPhones);
+  // Normalize the price and imageUrl of each phone
+  const normalizedPhones: NormalizedPhoneSummary[] = dedupedPhones.map((phone) => ({
+    ...phone,
+    basePrice: normalizePrice(phone.basePrice),
+    imageUrl: changeHttpToHttps(phone.imageUrl),
+  }));
+
+  return NextResponse.json(normalizedPhones);
 }
