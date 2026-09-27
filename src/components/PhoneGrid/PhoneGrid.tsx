@@ -12,15 +12,17 @@ export default function PhoneGrid({
 }) {
   if (phones.length === 0) {
     return (
-      <section>
+      <section className={styles['empty-state']}>
         {search === '' ? (
-          <div>
-            No hay móviles disponibles, inténtelo más tarde. <Link href="/">Reintentar</Link>
-          </div>
+          <>
+            <p>No hay móviles disponibles, inténtelo más tarde.</p>
+            <Link href="/">Reintentar</Link>
+          </>
         ) : (
-          <div>
-            No hay coincidencias para esta búsqueda. <Link href="/">Reiniciar búsqueda</Link>
-          </div>
+          <>
+            <p>No hay coincidencias para esta búsqueda.</p>
+            <Link href="/">Reiniciar búsqueda</Link>
+          </>
         )}
       </section>
     );
