@@ -1,6 +1,22 @@
+@use '../../styles/mixins' as *;
+
 .navbar {
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding-top: 28px;
+  padding-bottom: 28px;
+  @include mobile {
+    padding-left: var(--spacing-md);
+    padding-right: var(--spacing-md);
+  }
+  @include tablet {
+    padding-left: var(--spacing-xl);
+    padding-right: var(--spacing-xl);
+  }
+  @include desktop {
+    padding-left: var(--spacing-xxl);
+    padding-right: var(--spacing-xxl);
+  }
 }
