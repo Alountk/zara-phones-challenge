@@ -11,7 +11,7 @@
     display: block;
     margin-right: calc(var(--border-width-hairline) * -1);
     margin-left: calc(var(--border-width-hairline) * -1);
-    margin-bottom: calc(var(--border-width-hairline) * -1);
+    margin-bottom: calc(var(--border-width-hairline) * -2);
   }
   @include mobile {
     grid-template-columns: 1fr;
