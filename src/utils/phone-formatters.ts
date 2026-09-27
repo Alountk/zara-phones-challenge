@@ -19,4 +19,9 @@ const dedupeById = <T extends { id: string }>(array: T[]): T[] => {
   });
 };
 
-export { changeHttpToHttps, normalizePrice, dedupeById };
+const formatPrice = (price: number | null): string => {
+  if (price === null) return 'Price unavailable';
+  return `${price} EUR`;
+};
+
+export { changeHttpToHttps, normalizePrice, dedupeById, formatPrice };

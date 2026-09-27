@@ -1,0 +1,54 @@
+@use '../../styles/mixins' as *;
+
+.phone-grid {
+  display: grid;
+  gap: 0;
+  padding-top: 28px;
+  padding-bottom: 28px;
+  width: 100%;
+
+  > a {
+    display: block;
+    margin-right: calc(var(--border-width-hairline) * -1);
+    margin-left: calc(var(--border-width-hairline) * -1);
+    margin-bottom: calc(var(--border-width-hairline) * -2);
+  }
+  @include mobile {
+    grid-template-columns: 1fr;
+    padding-left: var(--spacing-md);
+    padding-right: var(--spacing-md);
+  }
+  @include tablet {
+    grid-template-columns: repeat(2, 1fr);
+    padding-left: var(--spacing-xl);
+    padding-right: var(--spacing-xl);
+  }
+  @include desktop {
+    grid-template-columns: repeat(5, 1fr);
+    padding-left: var(--spacing-xxl);
+    padding-right: var(--spacing-xxl);
+  }
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding-top: 28px;
+  padding-bottom: 28px;
+  width: 100%;
+  @include mobile {
+    padding-left: var(--spacing-md);
+    padding-right: var(--spacing-md);
+  }
+  @include tablet {
+    padding-left: var(--spacing-xl);
+    padding-right: var(--spacing-xl);
+  }
+  @include desktop {
+    padding-left: var(--spacing-xxl);
+    padding-right: var(--spacing-xxl);
+  }
+}

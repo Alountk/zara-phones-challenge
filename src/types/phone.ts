@@ -25,3 +25,7 @@ export interface PhoneDetail extends PhoneSummary {
   storageOptions: StorageOption[];
   similarProducts: PhoneSummary[];
 }
+
+export interface NormalizedPhoneSummary extends Omit<PhoneSummary, 'basePrice'> {
+  basePrice: number | null; // The prices contain decimals; we need to convert these to whole numbers so that they are displayed as shown in the design (e.g. 699.99 → 699 EUR)
+}
