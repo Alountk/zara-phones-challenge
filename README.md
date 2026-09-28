@@ -124,6 +124,7 @@ Throughout development, some requirements were ambiguous or not fully covered by
 - **`basePrice` decimals and rounding**: the API can return non-integer prices (e.g. `553.31`), while the Figma design shows rounded whole numbers with an "EUR" suffix (e.g. `"1219 EUR"`) rather than a currency-formatted string. Prices are rounded and suffixed accordingly for display; the underlying numeric value is preserved for calculations (e.g. cart total).
 - **Duplicate `id` in the listing endpoint**: the external API returns at least one duplicate entry in `/products`. Deduplication is applied defensively in the Route Handler.
 - **First 20 results, no pagination**: both the spec ("primeros 20 teléfonos") and the Figma design (fixed "20 RESULTS" counter, no "load more" or infinite scroll in any breakpoint) point to a fixed cap rather than paginated/infinite loading. Implemented as a fixed limit via the API's `?limit=20`.
+- **UI copy language inconsistency**: the Figma designs mix English and Spanish inconsistently (e.g. the search placeholder is in English, while spec labels within the phone detail design are in Spanish, though the spec _values_ themselves come from the API in whatever language it returns). In the absence of an i18n requirement, all UI copy written by us (labels, placeholders, empty states) is in English for consistency; content that comes from the external API is rendered as-is, untranslated.
 
 ## Roadmap / Future improvements
 

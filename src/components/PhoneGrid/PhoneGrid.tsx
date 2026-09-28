@@ -17,13 +17,13 @@ export default function PhoneGrid({
         <PhoneSearch search={search} quantityResult={phones.length} />
         {search === '' ? (
           <>
-            <p>No hay móviles disponibles, inténtelo más tarde.</p>
-            <Link href="/">Reintentar</Link>
+            <p>No phones available right now, please try again later.</p>
+            <Link href="/">Retry</Link>
           </>
         ) : (
           <>
-            <p>No hay coincidencias para esta búsqueda.</p>
-            <Link href="/">Reiniciar búsqueda</Link>
+            <p>No matches for this search.</p>
+            <Link href="/">Reset search</Link>
           </>
         )}
       </section>
