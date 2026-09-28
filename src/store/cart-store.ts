@@ -24,7 +24,7 @@ export function subscribe(callback: () => void) {
 export function getSnapshot(): CartItem[] {
   let raw: string | null = null;
   try {
-    localStorage.getItem(CART_STORAGE_KEY);
+    raw = localStorage.getItem(CART_STORAGE_KEY);
   } catch {
     raw = null;
   }
