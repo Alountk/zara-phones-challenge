@@ -1,0 +1,14 @@
+@use '../../styles/mixins' as *;
+
+.back-link {
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-sm);
+  font-weight: 300;
+  line-height: 100%;
+  letter-spacing: 0%;
+  text-box: trim-both cap alphabetic;
+  color: var(--color-primary);
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
