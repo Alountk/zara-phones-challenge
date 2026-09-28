@@ -1,7 +1,16 @@
 import 'server-only';
 
-import { NormalizedPhoneSummary, PhoneSummary } from '@/types/phone';
-import { changeHttpToHttps, dedupeById, normalizePrice } from '@/utils/phone-formatters';
+import {
+  NormalizedPhoneDetail,
+  NormalizedPhoneSummary,
+  PhoneDetail,
+  PhoneSummary,
+} from '@/types/phone';
+import {
+  changeHttpToHttps,
+  normalizePhoneSummaries,
+  normalizePrice,
+} from '@/utils/phone-formatters';
 import { ExternalApiError } from './errors';
 
 const PHONES_API_BASE_URL = process.env.PHONES_API_BASE_URL as string;
@@ -28,15 +37,36 @@ export async function getPhonesFromExternalApi(search?: string): Promise<Normali
 
   const phones: PhoneSummary[] = await res.json();
 
-  // Control the duplication of phones with the same id
-  const dedupedPhones = dedupeById(phones);
-
-  // Normalize the price and imageUrl of each phone
-  const normalizedPhones: NormalizedPhoneSummary[] = dedupedPhones.map((phone) => ({
-    ...phone,
-    basePrice: normalizePrice(phone.basePrice),
-    imageUrl: changeHttpToHttps(phone.imageUrl),
-  }));
+  const normalizedPhones = normalizePhoneSummaries(phones);
 
   return normalizedPhones;
+}
+
+export async function getPhoneDetailFromExternalApi(id: string): Promise<NormalizedPhoneDetail> {
+  const url = `${PHONES_API_BASE_URL}/products/${id}`;
+  const res = await fetch(url, {
+    headers: { 'x-api-key': PHONES_API_KEY },
+  });
+
+  if (!res.ok) {
+    throw new ExternalApiError('Error to get a phone by Id', res.status);
+  }
+
+  const phoneDetail: PhoneDetail = await res.json();
+
+  const normalizedPhoneDetail: NormalizedPhoneDetail = {
+    ...phoneDetail,
+    colorOptions: phoneDetail.colorOptions.map((color) => ({
+      ...color,
+      imageUrl: changeHttpToHttps(color.imageUrl),
+    })),
+    basePrice: normalizePrice(phoneDetail.basePrice),
+    storageOptions: phoneDetail.storageOptions.map((storage) => ({
+      ...storage,
+      price: normalizePrice(storage.price),
+    })),
+    similarProducts: normalizePhoneSummaries(phoneDetail.similarProducts),
+  };
+
+  return normalizedPhoneDetail;
 }

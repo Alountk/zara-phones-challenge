@@ -1,4 +1,10 @@
-import { changeHttpToHttps, dedupeById, formatPrice, normalizePrice } from './phone-formatters';
+import {
+  changeHttpToHttps,
+  dedupeById,
+  formatPrice,
+  normalizePhoneSummaries,
+  normalizePrice,
+} from './phone-formatters';
 
 describe('when change http to https', () => {
   it('http is empty return empty string', () => {
@@ -127,5 +133,62 @@ describe('formatPrice', () => {
   it('when the prices are valid return with EUR currency', () => {
     const result = formatPrice(699);
     expect(result).toBe('699 EUR');
+  });
+});
+
+describe('normalize phone summaries', () => {
+  const phonesListMock = [
+    {
+      id: 'SMG-S24U',
+      brand: 'Samsung',
+      name: 'Galaxy S24 Ultra',
+      basePrice: 1329.78,
+      imageUrl:
+        'http://prueba-tecnica-api-tienda-moviles.onrender.com/images/SMG-S24U-titanium-violet.webp',
+    },
+    {
+      id: 'SMG-A25',
+      brand: 'Samsung',
+      name: 'Galaxy A25 5G',
+      basePrice: 239.25,
+      imageUrl: 'http://prueba-tecnica-api-tienda-moviles.onrender.com/images/SMG-A25-negro.webp',
+    },
+    {
+      id: 'GPX-8A',
+      brand: 'Google',
+      name: 'Pixel 8a',
+      basePrice: 459.45,
+      imageUrl:
+        'http://prueba-tecnica-api-tienda-moviles.onrender.com/images/GPX-8A-obsidiana.webp',
+    },
+    {
+      id: 'SMG-S24U',
+      brand: 'Samsung',
+      name: 'Galaxy S24 Ultra',
+      basePrice: 1329.78,
+      imageUrl:
+        'http://prueba-tecnica-api-tienda-moviles.onrender.com/images/SMG-S24U-titanium-violet.webp',
+    },
+  ];
+
+  it('when the Phones list has a duplicate return dedupe phones', () => {
+    const result = normalizePhoneSummaries(phonesListMock);
+
+    expect(result).toHaveLength(3);
+  });
+  it('return the phone basePrice without decimal in every phones with decimal', () => {
+    const result = normalizePhoneSummaries(phonesListMock);
+
+    const checkNumberFormat = [1330, 239, 459];
+    result.forEach((phone, index) => {
+      expect(phone.basePrice).toEqual(checkNumberFormat[index]);
+    });
+  });
+  it('change http to https en every phone url', () => {
+    const result = normalizePhoneSummaries(phonesListMock);
+
+    result.forEach((phone) => {
+      expect(phone.imageUrl).toContain('https://');
+    });
   });
 });
