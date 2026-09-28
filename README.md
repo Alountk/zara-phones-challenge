@@ -126,6 +126,7 @@ Throughout development, some requirements were ambiguous or not fully covered by
 - **First 20 results, no pagination**: both the spec ("primeros 20 teléfonos") and the Figma design (fixed "20 RESULTS" counter, no "load more" or infinite scroll in any breakpoint) point to a fixed cap rather than paginated/infinite loading. Implemented as a fixed limit via the API's `?limit=20`.
 - **UI copy language inconsistency**: the Figma designs mix English and Spanish inconsistently (e.g. the search placeholder is in English, while spec labels within the phone detail design are in Spanish, though the spec _values_ themselves come from the API in whatever language it returns). In the absence of an i18n requirement, all UI copy written by us (labels, placeholders, empty states) is in English for consistency; content that comes from the external API is rendered as-is, untranslated.
 - **Loading bar duration vs. actual fetch time**: the Figma design shows a single-pass progress bar animation with no defined relationship to real load time. Implemented as a fixed 1s CSS animation for simplicity, matching the design's literal behavior — this means a fetch slower than 1s will show a "complete" bar while still loading. Flagged for discussion with design; a proper indeterminate/looping animation would avoid the misleading state at the cost of diverging from the exact Figma motion.
+- **Missing "back" link in tablet design**: the tablet mockup for the phone detail view omits the back navigation link/button present in mobile. Assumed to be an oversight; kept visible across all breakpoints for consistency and usability, pending confirmation from design.
 
 ## Roadmap / Future improvements
 
@@ -136,3 +137,4 @@ Given the time constraints of this technical test, the following were consciousl
 - **Infinite scroll / pagination**: the listing is currently capped at the first 20 results per spec. A production app would likely paginate or infinite-scroll beyond that.
 - **E2E tests**: current coverage focuses on unit tests for pure helpers. Adding Playwright/Cypress coverage for the full search → detail → add to cart → remove flow would increase confidence.
 - **Deployment**: deploy to Vercel to fulfil the optional requirement.
+- **Custom not-found page for phone detail**: currently falls back to Next's generic 404 when a phone `id` doesn't exist. A branded not-found.tsx (matching the app's design, with a link back to the listing) would improve the experience but was deprioritized to focus on core functionality.

@@ -1,0 +1,46 @@
+@use '../../../styles/mixins' as *;
+
+.phone-detail-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-section);
+}
+
+.back-link-wrapper {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  @include mobile {
+    padding-left: var(--spacing-md);
+    padding-right: var(--spacing-md);
+  }
+
+  @include tablet {
+    padding-left: var(--spacing-xl);
+    padding-right: var(--spacing-xl);
+  }
+
+  @include desktop {
+    padding-left: var(--spacing-xxl);
+    padding-right: var(--spacing-xxl);
+  }
+}
+
+.phone-detail-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-section);
+  @include mobile {
+    padding-left: var(--spacing-md);
+    padding-right: var(--spacing-md);
+  }
+
+  @include tablet {
+    padding-left: var(--spacing-xl);
+    padding-right: var(--spacing-xl);
+  }
+
+  @include desktop {
+    padding-left: var(--spacing-detail-content);
+    padding-right: var(--spacing-detail-content);
+  }
+}

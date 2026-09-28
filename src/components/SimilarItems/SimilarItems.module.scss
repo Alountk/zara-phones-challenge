@@ -1,0 +1,41 @@
+.similar-items {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: var(--spacing-xl);
+  min-height: 344px;
+  article {
+    width: 344px;
+  }
+}
+
+.title {
+  font-size: var(--font-size-md);
+  text-transform: uppercase;
+  margin-bottom: var(--spacing-md);
+}
+
+.list {
+  display: flex;
+  overflow-x: auto;
+  gap: 0;
+
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Edge / IE legacy */
+
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
+}
+
+.scroll-track {
+  margin-top: var(--spacing-md);
+  height: 1px;
+  width: 100%;
+  background: var(--color-brand-hover);
+}
+
+.scroll-thumb {
+  height: 100%;
+  background: var(--color-primary);
+  transition: transform 0.1s linear;
+}

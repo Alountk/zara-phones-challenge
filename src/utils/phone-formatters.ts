@@ -1,3 +1,5 @@
+import { NormalizedPhoneSummary, PhoneSummary } from '@/types/phone';
+
 const changeHttpToHttps = (url: string): string => {
   if (typeof url !== 'string') return '';
   if (url.startsWith('https://')) return url;
@@ -24,4 +26,17 @@ const formatPrice = (price: number | null): string => {
   return `${price} EUR`;
 };
 
-export { changeHttpToHttps, normalizePrice, dedupeById, formatPrice };
+const normalizePhoneSummaries = (phones: PhoneSummary[]): NormalizedPhoneSummary[] => {
+  // Control the duplication of phones with the same id
+  const dedupedPhones = dedupeById(phones);
+
+  // Normalize the price and imageUrl of each phone
+  const normalizedPhones: NormalizedPhoneSummary[] = dedupedPhones.map((phone) => ({
+    ...phone,
+    basePrice: normalizePrice(phone.basePrice),
+    imageUrl: changeHttpToHttps(phone.imageUrl),
+  }));
+  return normalizedPhones;
+};
+
+export { changeHttpToHttps, normalizePrice, dedupeById, formatPrice, normalizePhoneSummaries };

@@ -12,12 +12,12 @@ export interface ColorOption {
   imageUrl: string;
 }
 
-export interface StorageOption {
+interface StorageOption {
   capacity: string;
   price: number;
 }
 
-export interface PhoneDetail extends PhoneSummary {
+export interface PhoneDetail extends Omit<PhoneSummary, 'imageUrl'> {
   description: string;
   rating: number;
   specs: Record<string, string>; // This should be a flexible dictionary, as the fields differ from one phone to another.
@@ -28,4 +28,16 @@ export interface PhoneDetail extends PhoneSummary {
 
 export interface NormalizedPhoneSummary extends Omit<PhoneSummary, 'basePrice'> {
   basePrice: number | null; // The prices contain decimals; we need to convert these to whole numbers so that they are displayed as shown in the design (e.g. 699.99 → 699 EUR)
+}
+
+export interface NormalizedStorageOption extends Omit<StorageOption, 'price'> {
+  price: number | null;
+}
+export interface NormalizedPhoneDetail extends Omit<
+  PhoneDetail,
+  'basePrice' | 'storageOptions' | 'similarProducts'
+> {
+  basePrice: number | null; // The prices contain decimals; we need to convert these to whole numbers so that they are displayed as shown in the design (e.g. 699.99 → 699 EUR)
+  storageOptions: NormalizedStorageOption[];
+  similarProducts: NormalizedPhoneSummary[];
 }
