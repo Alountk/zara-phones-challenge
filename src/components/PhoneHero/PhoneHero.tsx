@@ -1,13 +1,15 @@
 'use client';
 
-import { useState } from 'react';
-import Image from 'next/image';
+import { useCart } from '@/context/CartContext';
 import { NormalizedPhoneDetail } from '@/types/phone';
 import { formatPrice } from '@/utils/phone-formatters';
-import styles from './PhoneHero.module.scss';
+import Image from 'next/image';
+import { useState } from 'react';
 import Button from '../Button/Button';
+import styles from './PhoneHero.module.scss';
 
 export default function PhoneHero({ phone }: { phone: NormalizedPhoneDetail }) {
+  const { addItem } = useCart();
   const { name, basePrice, colorOptions, storageOptions } = phone;
 
   const [selectedStorage, setSelectedStorage] = useState<string | null>(null);
@@ -22,6 +24,28 @@ export default function PhoneHero({ phone }: { phone: NormalizedPhoneDetail }) {
   const displayPrice = selectedStorageOption?.price ?? basePrice;
 
   const canAdd = Boolean(selectedStorage && selectedColor);
+
+  const handleAdd = () => {
+    // The button is disabled until both are selected, this only narrows the types
+    if (!selectedStorageOption || !selectedColorOption) return;
+
+    const { price } = selectedStorageOption;
+    if (price === null) return;
+
+    addItem({
+      id: `${phone.id}-${selectedStorageOption.capacity}-${selectedColorOption.name}`.replaceAll(
+        ' ',
+        '',
+      ),
+      phoneId: phone.id,
+      name: phone.name,
+      brand: phone.brand,
+      imageUrl: selectedColorOption.imageUrl,
+      price,
+      storage: selectedStorageOption.capacity,
+      color: selectedColorOption.name,
+    });
+  };
 
   return (
     <section className={styles['hero']}>
@@ -77,7 +101,7 @@ export default function PhoneHero({ phone }: { phone: NormalizedPhoneDetail }) {
         </div>
       </div>
 
-      <Button variant="primary" disabled={!canAdd}>
+      <Button variant="primary" disabled={!canAdd} onClick={handleAdd}>
         ADD
       </Button>
     </section>
