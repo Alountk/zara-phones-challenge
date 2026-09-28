@@ -77,7 +77,7 @@ export default function PhoneHero({ phone }: { phone: NormalizedPhoneDetail }) {
         </div>
       </div>
 
-      <Button variant="standard" disabled={!canAdd}>
+      <Button variant="primary" disabled={!canAdd}>
         ADD
       </Button>
     </div>
