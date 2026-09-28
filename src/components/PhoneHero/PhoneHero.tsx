@@ -23,7 +23,9 @@ export default function PhoneHero({ phone }: { phone: NormalizedPhoneDetail }) {
   );
   const displayPrice = selectedStorageOption?.price ?? basePrice;
 
-  const canAdd = Boolean(selectedStorage && selectedColor);
+  const canAdd = Boolean(
+    selectedColorOption && selectedStorageOption && selectedStorageOption.price !== null,
+  );
 
   const handleAdd = () => {
     // The button is disabled until both are selected, this only narrows the types
