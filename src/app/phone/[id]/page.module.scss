@@ -9,6 +9,10 @@
 .back-link-wrapper {
   padding-top: 12px;
   padding-bottom: 12px;
+  position: sticky;
+  top: var(--header-height);
+  z-index: 20;
+  background: var(--color-secondary);
   @include mobile {
     padding-left: var(--spacing-md);
     padding-right: var(--spacing-md);

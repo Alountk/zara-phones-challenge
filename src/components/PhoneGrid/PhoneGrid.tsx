@@ -31,13 +31,17 @@ export default function PhoneGrid({
   }
 
   return (
-    <section className={styles['phone-list-section']}>
-      <PhoneSearch search={search} quantityResult={phones.length} />
-      <div className={styles['phone-grid']}>
-        {phones.map((phone, index) => (
-          <PhoneCard key={phone.id} phone={phone} isPriority={index <= 4} />
-        ))}
-      </div>
-    </section>
+    <>
+      <section className={styles['phone-search']}>
+        <PhoneSearch search={search} quantityResult={phones.length} />
+      </section>
+      <section className={styles['phone-list-section']}>
+        <div className={styles['phone-grid']}>
+          {phones.map((phone, index) => (
+            <PhoneCard key={phone.id} phone={phone} isPriority={index <= 4} />
+          ))}
+        </div>
+      </section>
+    </>
   );
 }
