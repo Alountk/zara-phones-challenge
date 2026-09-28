@@ -24,7 +24,7 @@ export default function PhoneHero({ phone }: { phone: NormalizedPhoneDetail }) {
   const canAdd = Boolean(selectedStorage && selectedColor);
 
   return (
-    <div className={styles['hero']}>
+    <section className={styles['hero']}>
       <div className={styles['image-wrapper']}>
         {displayImage ? (
           <Image
@@ -80,6 +80,6 @@ export default function PhoneHero({ phone }: { phone: NormalizedPhoneDetail }) {
       <Button variant="primary" disabled={!canAdd}>
         ADD
       </Button>
-    </div>
+    </section>
   );
 }
