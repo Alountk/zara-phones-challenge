@@ -1,0 +1,17 @@
+.loading-bar {
+  position: fixed;
+  top: var(--header-height);
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--color-primary);
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: fill-bar 1s ease-out forwards;
+}
+
+@keyframes fill-bar {
+  to {
+    transform: scaleX(1);
+  }
+}
