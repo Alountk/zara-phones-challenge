@@ -1,0 +1,37 @@
+.line {
+  display: flex;
+  gap: var(--spacing-lg);
+}
+
+.image-wrapper {
+  position: relative;
+  flex-shrink: 0;
+  width: 120px;
+  aspect-ratio: 1 / 1;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  font-size: var(--font-size-xxs);
+  text-transform: uppercase;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.price,
+.quantity {
+  font-size: var(--font-size-xs);
+}
+
+.remove {
+  align-self: flex-start;
+  padding: 0;
+  font-size: var(--font-size-xs);
+  color: var(--color-error);
+}
