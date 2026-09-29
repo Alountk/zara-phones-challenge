@@ -18,6 +18,11 @@
   padding-bottom: var(--spacing-xl);
 }
 
+.rows {
+  display: contents;
+  margin: 0;
+}
+
 .row {
   display: grid;
   grid-template-columns: repeat(2, 1fr);

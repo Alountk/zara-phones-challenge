@@ -40,13 +40,20 @@ export default function PhoneSearch({
     <div className={styles['search-wrapper']}>
       <div className={styles['search-bar']}>
         <input
+          id="phone-search-input"
           className={styles['input']}
           placeholder="Search for a smartphone..."
+          aria-label="Search for a smartphone"
           value={inputData}
           onChange={handleOnChange}
         />
         {inputData.length !== 0 && (
-          <button className={styles['clear-button']} onClick={() => cleanInput()}>
+          <button
+            type="button"
+            className={styles['clear-button']}
+            aria-label="Clear search"
+            onClick={() => cleanInput()}
+          >
             ×
           </button>
         )}

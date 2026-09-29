@@ -38,7 +38,7 @@ export default function PhoneGrid({
       <section className={styles['phone-list-section']}>
         <div className={styles['phone-grid']}>
           {phones.map((phone, index) => (
-            <PhoneCard key={phone.id} phone={phone} isPriority={index <= 4} />
+            <PhoneCard key={phone.id} phone={phone} isPriority={index <= 9} />
           ))}
         </div>
       </section>
