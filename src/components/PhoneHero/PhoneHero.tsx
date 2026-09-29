@@ -7,6 +7,7 @@ import Image from 'next/image';
 import { useState } from 'react';
 import Button from '../Button/Button';
 import styles from './PhoneHero.module.scss';
+import { IMAGE_SHIMMER_PLACEHOLDER } from '@/utils/image-shimmer';
 
 export default function PhoneHero({ phone }: { phone: NormalizedPhoneDetail }) {
   const { addItem } = useCart();
@@ -57,8 +58,10 @@ export default function PhoneHero({ phone }: { phone: NormalizedPhoneDetail }) {
             src={displayImage}
             alt={name}
             fill
-            style={{ objectFit: 'contain' }}
+            priority
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            style={{ objectFit: 'contain' }}
+            placeholder={IMAGE_SHIMMER_PLACEHOLDER}
           />
         ) : (
           <span className={styles['image-placeholder']}>Image not available</span>

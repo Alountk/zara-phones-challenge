@@ -3,6 +3,7 @@ import { formatPrice } from '@/utils/phone-formatters';
 import Image from 'next/image';
 import Link from 'next/link';
 import styles from './PhoneCard.module.scss';
+import { IMAGE_SHIMMER_PLACEHOLDER } from '@/utils/image-shimmer';
 
 export default function PhoneCard({
   phone,
@@ -23,6 +24,7 @@ export default function PhoneCard({
               priority={isPriority}
               sizes="(max-width: 599px) 100vw, (max-width: 1023px) 50vw, 20vw"
               style={{ maxWidth: '100%', objectFit: 'contain' }}
+              placeholder={IMAGE_SHIMMER_PLACEHOLDER}
             />
           </div>
         ) : (

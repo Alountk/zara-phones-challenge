@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { CartItem } from '@/types/cart';
 import { formatPrice } from '@/utils/phone-formatters';
 import styles from './CartLine.module.scss';
+import { IMAGE_SHIMMER_PLACEHOLDER } from '@/utils/image-shimmer';
 
 interface CartLineProps {
   item: CartItem;
@@ -21,6 +22,7 @@ export default function CartLine({ item, onRemove, isPriority = false }: CartLin
             priority={isPriority}
             sizes="120px"
             style={{ objectFit: 'contain' }}
+            placeholder={IMAGE_SHIMMER_PLACEHOLDER}
           />
         ) : (
           <div className={styles['image-placeholder']}>Image not available</div>
