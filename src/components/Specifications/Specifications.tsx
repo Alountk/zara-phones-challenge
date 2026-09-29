@@ -1,5 +1,6 @@
 import { NormalizedPhoneDetail } from '@/types/phone';
 import styles from './Specifications.module.scss';
+import { camelCaseToLabel } from '@/utils/phone-formatters';
 
 export default function Specifications({ phone }: { phone: NormalizedPhoneDetail }) {
   const { name, brand, specs } = phone;
@@ -13,7 +14,7 @@ export default function Specifications({ phone }: { phone: NormalizedPhoneDetail
       value: name,
     },
     ...Object.entries(specs).map(([label, value]) => ({
-      label,
+      label: camelCaseToLabel(label),
       value,
     })),
   ];

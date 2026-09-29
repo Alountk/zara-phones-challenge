@@ -39,4 +39,17 @@ const normalizePhoneSummaries = (phones: PhoneSummary[]): NormalizedPhoneSummary
   return normalizedPhones;
 };
 
-export { changeHttpToHttps, normalizePrice, dedupeById, formatPrice, normalizePhoneSummaries };
+const camelCaseToLabel = (key: string): string =>
+  key
+    .replace(/([a-z0-9])([A-Z])/g, '$1 $2') // mainCamera -> main Camera
+    .replace(/([A-Z]+)([A-Z][a-z])/g, '$1 $2') // NFCEnabled -> NFC Enabled
+    .replace(/^./, (char) => char.toUpperCase()); // main Camera -> Main Camera
+
+export {
+  changeHttpToHttps,
+  normalizePrice,
+  dedupeById,
+  formatPrice,
+  normalizePhoneSummaries,
+  camelCaseToLabel,
+};

@@ -1,4 +1,5 @@
 import {
+  camelCaseToLabel,
   changeHttpToHttps,
   dedupeById,
   formatPrice,
@@ -190,5 +191,20 @@ describe('normalize phone summaries', () => {
     result.forEach((phone) => {
       expect(phone.imageUrl).toContain('https://');
     });
+  });
+});
+
+describe('camelCaseToLabel', () => {
+  it('splits camelCase keys into capitalized words', () => {
+    expect(camelCaseToLabel('mainCamera')).toBe('Main Camera');
+    expect(camelCaseToLabel('screenRefreshRate')).toBe('Screen Refresh Rate');
+  });
+
+  it('capitalizes single-word keys', () => {
+    expect(camelCaseToLabel('os')).toBe('Os');
+  });
+
+  it('keeps consecutive capitals together', () => {
+    expect(camelCaseToLabel('NFCEnabled')).toBe('NFC Enabled');
   });
 });
