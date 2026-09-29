@@ -21,8 +21,8 @@ export default function CartView() {
       <h1 className={styles['title']}>Cart ({itemCount})</h1>
 
       <ul className={styles['list']}>
-        {items.map((item) => (
-          <CartLine key={item.id} item={item} onRemove={removeItem} />
+        {items.map((item, index) => (
+          <CartLine key={item.id} item={item} onRemove={removeItem} isPriority={index === 0} />
         ))}
       </ul>
 

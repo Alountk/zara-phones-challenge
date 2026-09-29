@@ -6,9 +6,10 @@ import styles from './CartLine.module.scss';
 interface CartLineProps {
   item: CartItem;
   onRemove: (id: string) => void;
+  isPriority?: boolean;
 }
 
-export default function CartLine({ item, onRemove }: CartLineProps) {
+export default function CartLine({ item, onRemove, isPriority = false }: CartLineProps) {
   return (
     <li className={styles['line']}>
       <div className={styles['image-wrapper']}>
@@ -17,6 +18,7 @@ export default function CartLine({ item, onRemove }: CartLineProps) {
             src={item.imageUrl}
             alt={item.name}
             fill
+            priority={isPriority}
             sizes="120px"
             style={{ objectFit: 'contain' }}
           />
