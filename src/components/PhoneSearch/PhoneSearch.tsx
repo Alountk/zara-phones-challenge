@@ -13,8 +13,14 @@ export default function PhoneSearch({
   quantityResult: number;
 }) {
   const [inputData, setInputData] = useState<string>(search);
+  const [prevSearch, setPrevSearch] = useState<string>(search);
   const router = useRouter();
   const pathname = usePathname();
+
+  if (search !== prevSearch) {
+    setPrevSearch(search);
+    setInputData(search);
+  }
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
