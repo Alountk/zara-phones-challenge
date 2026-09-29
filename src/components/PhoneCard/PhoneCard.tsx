@@ -12,7 +12,7 @@ export default function PhoneCard({
   isPriority: boolean;
 }) {
   return (
-    <Link href={`/phone/${phone.id}`}>
+    <Link href={`/phone/${phone.id}`} prefetch={false}>
       <article className={styles['card']}>
         {phone.imageUrl ? (
           <div className={styles['phone-image-wrapper']}>
