@@ -81,3 +81,55 @@
     padding-right: var(--spacing-xxl);
   }
 }
+
+.standard-button {
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-xs);
+  font-weight: 300;
+  text-box: trim-both cap alphabetic;
+  line-height: var(--line-height-md);
+  letter-spacing: 8%;
+  text-align: center;
+  vertical-align: middle;
+  text-transform: uppercase;
+  cursor: pointer;
+  padding-left: 32px;
+  padding-right: 32px;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+
+  background: var(--button-color-standard);
+  color: var(--color-primary);
+  border: var(--border-width-hairline) solid var(--button-border-color-standard);
+
+  @include hover-supported {
+    &:hover:not(:disabled) {
+      color: #504d49;
+      border-color: var(--button-border-color-standard-hover);
+    }
+  }
+
+  &:active:not(:disabled) {
+    border-color: var(--button-border-color-standard-active);
+  }
+
+  &:disabled {
+    color: #c2bfbc;
+    border-color: var(--button-border-color-standard-disabled);
+  }
+
+  @include mobile {
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+  @include tablet {
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+  @include desktop {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+}

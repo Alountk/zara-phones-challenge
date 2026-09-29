@@ -18,12 +18,16 @@ export default function PhoneGrid({
         {search === '' ? (
           <>
             <p>No phones available right now, please try again later.</p>
-            <Link href="/">Retry</Link>
+            <Link href="/" className={styles['standard-button']}>
+              Retry
+            </Link>
           </>
         ) : (
           <>
             <p>No matches for this search.</p>
-            <Link href="/">Reset search</Link>
+            <Link href="/" className={styles['standard-button']}>
+              Reset search
+            </Link>
           </>
         )}
       </section>
