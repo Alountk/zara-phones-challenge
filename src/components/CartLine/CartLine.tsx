@@ -25,7 +25,7 @@ export default function CartLine({ item, onRemove }: CartLineProps) {
         <p className={styles['price']}>{formatPrice(item.price)}</p>
         {item.quantity > 1 && <p className={styles['quantity']}>x{item.quantity}</p>}
         <button type="button" className={styles['remove']} onClick={() => onRemove(item.id)}>
-          Eliminar
+          Remove
         </button>
       </div>
     </li>
