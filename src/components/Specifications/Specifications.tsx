@@ -1,8 +1,8 @@
-import { NormalizedPhoneDetail, NormalizedPhoneSummary } from '@/types/phone';
+import { NormalizedPhoneDetail } from '@/types/phone';
 import styles from './Specifications.module.scss';
 
 export default function Specifications({ phone }: { phone: NormalizedPhoneDetail }) {
-  const { name, brand, basePrice, specs } = phone;
+  const { name, brand, specs } = phone;
   const specsArray = [
     {
       label: 'Brand',
@@ -20,12 +20,14 @@ export default function Specifications({ phone }: { phone: NormalizedPhoneDetail
   return (
     <section className={styles['specifications']}>
       <h2 className={styles['title']}>Specifications</h2>
-      {specsArray.map((spec) => (
-        <div key={spec.label} className={styles['row']}>
-          <span className={styles['label']}>{spec.label}</span>
-          <span className={styles['value']}>{spec.value}</span>
-        </div>
-      ))}
+      <dl className={styles['rows']}>
+        {specsArray.map((spec) => (
+          <div key={spec.label} className={styles['row']}>
+            <dt className={styles['label']}>{spec.label}</dt>
+            <dd className={styles['value']}>{spec.value}</dd>
+          </div>
+        ))}
+      </dl>
     </section>
   );
 }
