@@ -1,9 +1,27 @@
 @use '../../styles/mixins' as *;
 
+.phone-search {
+  padding-top: 24px;
+  position: sticky;
+  top: var(--header-height);
+  z-index: 20;
+  background: var(--color-secondary);
+  @include mobile {
+    padding-left: var(--spacing-md);
+    padding-right: var(--spacing-md);
+  }
+  @include tablet {
+    padding-left: var(--spacing-xl);
+    padding-right: var(--spacing-xl);
+  }
+  @include desktop {
+    padding-left: var(--spacing-xxl);
+    padding-right: var(--spacing-xxl);
+  }
+}
 .phone-list-section {
   display: flex;
   flex-direction: column;
-  padding-top: 28px;
   padding-bottom: 28px;
   @include mobile {
     padding-left: var(--spacing-md);
