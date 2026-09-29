@@ -74,6 +74,31 @@ pnpm test:watch   # Jest in watch mode
 Given the time constraints of this test, testing effort was focused on **pure business logic** (the formatter/dedup helpers in `src/utils/phone-formatters.ts`), built with a strict Red-Green-Refactor TDD cycle where the expected behaviour was known upfront. Network I/O and framework glue code were deprioritized in favor of covering the logic most likely to break silently or regress.
 Component-level coverage was later added with React Testing Library for the interactive/client components (search, cart, product hero, navbar, cards, grid), including regression tests for accessibility attributes (labels, `aria-pressed`) and for the `next/image` `sizes`-missing console warning fixed in `CartLine`. Note: Jest cannot test `async` Server Components directly, so `src/app/page.tsx` and `src/app/phone/[id]/page.tsx` remain untested at the unit level.
 
+## Deployment
+
+The app is deployed on [Vercel](https://vercel.com) and available at **[https://zara-phones-challenge.vercel.app/]**.
+
+### How it is deployed
+
+- The GitHub repository is connected to a Vercel project (Framework Preset: Next.js, default build settings).
+- Every push to `main` triggers a production deployment. Pull requests get their own preview deployment.
+
+### Environment variables
+
+Set these in _Vercel → Project → Settings → Environment Variables_ (they are documented in `.env.example`):
+
+| Variable              | Description                            |
+| --------------------- | -------------------------------------- |
+| `PHONES_API_BASE_URL` | Base URL of the external phones API    |
+| `PHONES_API_KEY`      | API key sent as the `x-api-key` header |
+
+Both variables are read only on the server, inside the Route Handler that acts as a BFF. They deliberately have no `NEXT_PUBLIC_` prefix, so the API key is never exposed to the browser.
+
+### Notes
+
+- Product images are served from the API host over https, which is allowed through `images.remotePatterns` in `next.config.ts`.
+- The external API is hosted on Render. If it is on a free tier it may spin down when idle, so the first request after a while can be noticeably slow.
+
 ## Progress checklist
 
 ### Phone listing view
@@ -111,7 +136,7 @@ Component-level coverage was later added with React Testing Library for the inte
 
 ### Optional
 
-- [ ] Deployment
+- [x] Deployment
 - [x] SSR (Next.js App Router, Server Components by default)
 - [x] CSS variables
 
