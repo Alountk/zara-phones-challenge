@@ -72,6 +72,7 @@ pnpm test:watch   # Jest in watch mode
 ## Testing approach
 
 Given the time constraints of this test, testing effort was focused on **pure business logic** (the formatter/dedup helpers in `src/utils/phone-formatters.ts`), built with a strict Red-Green-Refactor TDD cycle where the expected behaviour was known upfront. Network I/O and framework glue code were deprioritized in favor of covering the logic most likely to break silently or regress.
+Component-level coverage was later added with React Testing Library for the interactive/client components (search, cart, product hero, navbar, cards, grid), including regression tests for accessibility attributes (labels, `aria-pressed`) and for the `next/image` `sizes`-missing console warning fixed in `CartLine`. Note: Jest cannot test `async` Server Components directly, so `src/app/page.tsx` and `src/app/phone/[id]/page.tsx` remain untested at the unit level.
 
 ## Progress checklist
 
@@ -103,9 +104,9 @@ Given the time constraints of this test, testing effort was focused on **pure bu
 
 - [x] Testing (unit tests for pure helpers so far)
 - [x] Responsive design
-- [ ] Accessibility
+- [x] Accessibility
 - [x] Linters and formatters (ESLint + Prettier + Husky)
-- [ ] Clean browser console
+- [x] Clean browser console
 - [x] Detailed README (this one, work in progress)
 
 ### Optional
@@ -138,4 +139,3 @@ Given the time constraints of this technical test, the following were consciousl
 - **Infinite scroll / pagination**: the listing is currently capped at the first 20 results per spec. A production app would likely paginate or infinite-scroll beyond that.
 - **E2E tests**: current coverage focuses on unit tests for pure helpers. Adding Playwright/Cypress coverage for the full search → detail → add to cart → remove flow would increase confidence.
 - **Deployment**: deploy to Vercel to fulfil the optional requirement.
-- **Custom not-found page for phone detail**: currently falls back to Next's generic 404 when a phone `id` doesn't exist. A branded not-found.tsx (matching the app's design, with a link back to the listing) would improve the experience but was deprioritized to focus on core functionality.
