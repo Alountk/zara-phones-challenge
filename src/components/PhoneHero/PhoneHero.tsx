@@ -77,6 +77,7 @@ export default function PhoneHero({ phone }: { phone: NormalizedPhoneDetail }) {
             <button
               key={storage.capacity}
               type="button"
+              aria-pressed={selectedStorage === storage.capacity}
               className={`${styles['pill']} ${
                 selectedStorage === storage.capacity ? styles['pill--selected'] : ''
               }`}
@@ -93,6 +94,7 @@ export default function PhoneHero({ phone }: { phone: NormalizedPhoneDetail }) {
               key={color.name}
               type="button"
               aria-label={color.name}
+              aria-pressed={selectedColor === color.name}
               className={`${styles['swatch']} ${
                 selectedColor === color.name ? styles['swatch--selected'] : ''
               }`}
