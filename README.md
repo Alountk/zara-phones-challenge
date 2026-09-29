@@ -79,30 +79,30 @@ Given the time constraints of this test, testing effort was focused on **pure bu
 
 - [x] Grid displaying phones from the API
 - [x] Search filtering by name/brand (via API `?search=`)
-- [ ] Results count indicator
-- [ ] Navbar with home link and cart count
-- [ ] Cart persisted via localStorage
-- [ ] Click navigates to detail view
+- [x] Results count indicator
+- [x] Navbar with home link and cart count
+- [x] Cart persisted via localStorage
+- [x] Click navigates to detail view
 
 ### Phone detail view
 
-- [ ] Name, brand, description, specs
-- [ ] Large image, changes with selected color
-- [ ] Storage/color selectors with live price update
-- [ ] "Add to cart" enabled only when color + storage selected
-- [ ] Similar products section
+- [x] Name, brand, description, specs
+- [x] Large image, changes with selected color
+- [x] Storage/color selectors with live price update
+- [x] "Add to cart" enabled only when color + storage selected
+- [x] Similar products section
 
 ### Cart view
 
-- [ ] Items with image, spec, individual price
-- [ ] Remove individual item
-- [ ] Total price
-- [ ] "Continue shopping" button
+- [x] Items with image, spec, individual price
+- [x] Remove individual item
+- [x] Total price
+- [x] "Continue shopping" button
 
 ### Cross-cutting requirements
 
 - [x] Testing (unit tests for pure helpers so far)
-- [ ] Responsive design
+- [x] Responsive design
 - [ ] Accessibility
 - [x] Linters and formatters (ESLint + Prettier + Husky)
 - [ ] Clean browser console
