@@ -2,6 +2,8 @@
 
 A web application for browsing, searching and managing a shopping cart of mobile phones, built as a technical test.
 
+**[Live demo](https://zara-challenge.marchan.dev/)**
+
 ## Tech stack
 
 - **Framework**: Next.js 16 (App Router), TypeScript
@@ -50,7 +52,7 @@ Open [http://localhost:3000](http://localhost:3000) (or the next available port)
 | `PHONES_API_BASE_URL` | Base URL of the external phones API                       |
 | `PHONES_API_KEY`      | API key required by the external API (`x-api-key` header) |
 
-Both are server-only (no `NEXT_PUBLIC_` prefix) — they are only ever read inside Route Handlers, never in Client Components, so they never reach the browser bundle.
+Both are server-only (no `NEXT_PUBLIC_` prefix) — they are only ever read inside Server Components, never in Client Components, so they never reach the browser bundle.
 
 ### Scripts
 
@@ -76,28 +78,43 @@ Component-level coverage was later added with React Testing Library for the inte
 
 ## Deployment
 
-The app is deployed on [Vercel](https://vercel.com) and available at **[https://zara-phones-challenge-iipvjlmnr-alountks-projects.vercel.app/]**.
+The app is live at **[https://zara-challenge.marchan.dev/](https://zara-challenge.marchan.dev/)**.
 
 ### How it is deployed
 
-- The GitHub repository is connected to a Vercel project (Framework Preset: Next.js, default build settings).
-- Every push to `main` triggers a production deployment. Pull requests get their own preview deployment.
+Self-hosted pipeline, fully driven from this repository:
+
+1. **CI/CD** — every push to `main` runs the `Build & publish image` workflow
+   (`.github/workflows/docker-publish.yml`): it builds the multi-stage `Dockerfile`
+   (Next.js `standalone` output) and pushes the image to GHCR
+   (`ghcr.io/alountk/zara-phones-challenge`, tags `latest` + `sha-<commit>`).
+   A final step prunes old package versions, so **at most 3 images** stay online.
+2. **Orchestration** — the server runs **Portainer**, which deploys
+   `docker-compose.yml` as a stack. The compose file pulls the image from GHCR and
+   injects the server-only environment variables at **runtime** — they are never
+   baked into the image.
+3. **Reverse proxy** — **nginx** in front of the container terminates TLS for
+   `zara-challenge.marchan.dev` and forwards traffic to the app on port `3000`.
 
 ### Environment variables
 
-Set these in _Vercel → Project → Settings → Environment Variables_ (they are documented in `.env.example`):
+Set them where the stack is deployed (Portainer → stack environment, or a `.env`
+file next to `docker-compose.yml` when using the CLI). Documented in `.env.example`:
 
 | Variable              | Description                            |
 | --------------------- | -------------------------------------- |
 | `PHONES_API_BASE_URL` | Base URL of the external phones API    |
 | `PHONES_API_KEY`      | API key sent as the `x-api-key` header |
 
-Both variables are read only on the server, inside the Route Handler that acts as a BFF. They deliberately have no `NEXT_PUBLIC_` prefix, so the API key is never exposed to the browser.
+Both are read only on the server (Server Components behind the `server-only`
+package), so the API key never reaches the browser.
 
 ### Notes
 
-- Product images are served from the API host over https, which is allowed through `images.remotePatterns` in `next.config.ts`.
-- The external API is hosted on Render. If it is on a free tier it may spin down when idle, so the first request after a while can be noticeably slow.
+- Product images are served from the API host over https, allowed through
+  `images.remotePatterns` in `next.config.ts`.
+- The external API is hosted on Render. If it is on a free tier it may spin down
+  when idle, so the first request after a while can be noticeably slow.
 
 ## Progress checklist
 
@@ -149,7 +166,7 @@ Throughout development, some requirements were ambiguous or not fully covered by
 - **Missing/broken product image**: neither the API nor the Figma designs define a fallback state for when `imageUrl` is empty or invalid. A neutral placeholder is rendered instead of passing an invalid `src` to `next/image`, to keep the browser console free of warnings as required.
 - **`basePrice` decimals and rounding**: the API can return non-integer prices (e.g. `553.31`), while the Figma design shows rounded whole numbers with an "EUR" suffix (e.g. `"1219 EUR"`) rather than a currency-formatted string. Prices are rounded and suffixed accordingly for display; the underlying numeric value is preserved for calculations (e.g. cart total).
 - **`basePrice` is not always the cheapest storage option**: the API can return a `basePrice` higher than its lowest `storageOptions[].price` — e.g. the Galaxy S24 Ultra ships `basePrice: 1329` while its 256 GB option costs `1229`. The spec asks for the _"precio base"_ next to the storage variations, so we render `basePrice` as the initial figure and swap it for the selected option's price as soon as one is picked. We never derive or invent a price the API did not return.
-- **Duplicate `id` in the listing endpoint**: the external API returns at least one duplicate entry in `/products`. Deduplication is applied defensively in the Route Handler.
+- **Duplicate `id` in the listing endpoint**: the external API returns at least one duplicate entry in `/products`. Deduplication is applied defensively in the server boundary (phones-server.ts).
 - **First 20 results, no pagination**: both the spec ("primeros 20 teléfonos") and the Figma design (fixed "20 RESULTS" counter, no "load more" or infinite scroll in any breakpoint) point to a fixed cap rather than paginated/infinite loading. Implemented as a fixed limit via the API's `?limit=20`.
 - **UI copy language inconsistency**: the Figma designs mix English and Spanish inconsistently (e.g. the search placeholder is in English, while spec labels within the phone detail design are in Spanish, though the spec _values_ themselves come from the API in whatever language it returns). In the absence of an i18n requirement, all UI copy written by us (labels, placeholders, empty states) is in English for consistency; content that comes from the external API is rendered as-is, untranslated.
 - **Loading bar duration vs. actual fetch time**: the Figma design shows a single-pass progress bar animation with no defined relationship to real load time. Implemented as a fixed 1s CSS animation for simplicity, matching the design's literal behavior — this means a fetch slower than 1s will show a "complete" bar while still loading. Flagged for discussion with design; a proper indeterminate/looping animation would avoid the misleading state at the cost of diverging from the exact Figma motion.
