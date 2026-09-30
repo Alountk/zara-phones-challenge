@@ -76,7 +76,7 @@ Component-level coverage was later added with React Testing Library for the inte
 
 ## Deployment
 
-The app is deployed on [Vercel](https://vercel.com) and available at **[https://zara-phones-challenge-bbyaiucfz-alountks-projects.vercel.app]**.
+The app is deployed on [Vercel](https://vercel.com) and available at **[https://zara-phones-challenge-iipvjlmnr-alountks-projects.vercel.app/]**.
 
 ### How it is deployed
 
