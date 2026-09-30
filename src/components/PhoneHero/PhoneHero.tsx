@@ -26,7 +26,8 @@ export default function PhoneHero({ phone }: { phone: NormalizedPhoneDetail }) {
     .map((option) => option.price)
     .filter((price): price is number => price !== null);
   const fallbackPrice = cheapest.length > 0 ? Math.min(...cheapest) : basePrice;
-  const displayPrice = selectedStorageOption?.price ?? fallbackPrice;
+  const displayPrice = selectedStorageOption ? selectedStorageOption.price : fallbackPrice;
+  const showFromPrefix = !selectedStorageOption && displayPrice !== null;
 
   const canAdd = Boolean(
     selectedColorOption && selectedStorageOption && selectedStorageOption.price !== null,
@@ -75,7 +76,7 @@ export default function PhoneHero({ phone }: { phone: NormalizedPhoneDetail }) {
       <div className={styles['heading']}>
         <h1 className={styles['name']}>{name}</h1>
         <p className={styles['price']}>
-          {selectedStorageOption ? formatPrice(displayPrice) : `From ${formatPrice(displayPrice)}`}
+          {showFromPrefix ? `From ${formatPrice(displayPrice)}` : formatPrice(displayPrice)}
         </p>
       </div>
 
