@@ -7,10 +7,10 @@ import { IMAGE_SHIMMER_PLACEHOLDER } from '@/utils/image-shimmer';
 interface CartLineProps {
   item: CartItem;
   onRemove: (id: string) => void;
-  isPriority?: boolean;
+  isEager?: boolean;
 }
 
-export default function CartLine({ item, onRemove, isPriority = false }: CartLineProps) {
+export default function CartLine({ item, onRemove, isEager = false }: CartLineProps) {
   return (
     <li className={styles['line']}>
       <div className={styles['image-wrapper']}>
@@ -19,7 +19,7 @@ export default function CartLine({ item, onRemove, isPriority = false }: CartLin
             src={item.imageUrl}
             alt={item.name}
             fill
-            priority={isPriority}
+            loading={isEager ? 'eager' : 'lazy'}
             sizes="120px"
             style={{ objectFit: 'contain' }}
             placeholder={IMAGE_SHIMMER_PLACEHOLDER}

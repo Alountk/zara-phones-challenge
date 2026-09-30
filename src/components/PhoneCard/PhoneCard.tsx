@@ -8,10 +8,14 @@ import { IMAGE_SHIMMER_PLACEHOLDER } from '@/utils/image-shimmer';
 export default function PhoneCard({
   phone,
   isPriority,
+  isEager,
 }: {
   phone: NormalizedPhoneSummary;
   isPriority: boolean;
+  isEager?: boolean;
 }) {
+  const loading = isPriority ? undefined : isEager ? 'eager' : 'lazy';
+
   return (
     <Link href={`/phone/${phone.id}`}>
       <article className={styles['card']}>
@@ -22,7 +26,8 @@ export default function PhoneCard({
               alt={phone.name}
               fill
               priority={isPriority}
-              sizes="(max-width: 599px) 100vw, (max-width: 1023px) 50vw, 20vw"
+              loading={loading}
+              sizes="(max-width: 767px) 100vw, (max-width: 1199px) 50vw, 20vw"
               style={{ maxWidth: '100%', objectFit: 'contain' }}
               placeholder={IMAGE_SHIMMER_PLACEHOLDER}
             />

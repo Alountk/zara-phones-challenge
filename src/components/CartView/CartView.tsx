@@ -7,6 +7,8 @@ import { formatPrice } from '@/utils/phone-formatters';
 import CartLine from '../CartLine/CartLine';
 import styles from './CartView.module.scss';
 
+const ABOVE_THE_FOLD = 5;
+
 export default function CartView() {
   const router = useRouter();
   const { items, itemCount, removeItem } = useCart();
@@ -22,7 +24,12 @@ export default function CartView() {
 
       <ul className={styles['list']}>
         {items.map((item, index) => (
-          <CartLine key={item.id} item={item} onRemove={removeItem} isPriority={index === 0} />
+          <CartLine
+            key={item.id}
+            item={item}
+            onRemove={removeItem}
+            isEager={index < ABOVE_THE_FOLD}
+          />
         ))}
       </ul>
 

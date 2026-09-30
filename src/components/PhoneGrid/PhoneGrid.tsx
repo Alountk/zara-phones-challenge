@@ -4,6 +4,8 @@ import Link from 'next/link';
 import styles from './PhoneGrid.module.scss';
 import PhoneSearch from '../PhoneSearch/PhoneSearch';
 
+const ABOVE_THE_FOLD = 5;
+
 export default function PhoneGrid({
   phones,
   search,
@@ -42,7 +44,12 @@ export default function PhoneGrid({
       <section className={styles['phone-list-section']}>
         <div className={styles['phone-grid']}>
           {phones.map((phone, index) => (
-            <PhoneCard key={phone.id} phone={phone} isPriority={index <= 9} />
+            <PhoneCard
+              key={phone.id}
+              phone={phone}
+              isPriority={index === 0}
+              isEager={index < ABOVE_THE_FOLD}
+            />
           ))}
         </div>
       </section>
