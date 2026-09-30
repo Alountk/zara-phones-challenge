@@ -76,7 +76,7 @@ Component-level coverage was later added with React Testing Library for the inte
 
 ## Deployment
 
-The app is deployed on [Vercel](https://vercel.com) and available at **[https://zara-phones-challenge.vercel.app/]**.
+The app is deployed on [Vercel](https://vercel.com) and available at **[https://zara-phones-challenge-k3rtmvaqy-alountks-projects.vercel.app/]**.
 
 ### How it is deployed
 
@@ -164,4 +164,3 @@ Given the time constraints of this technical test, the following were consciousl
 - **Checkout flow**: wire the "PAY" button in the cart view to an actual payment flow, once a payment provider/API is defined.
 - **Infinite scroll / pagination**: the listing is currently capped at the first 20 results per spec. A production app would likely paginate or infinite-scroll beyond that.
 - **E2E tests**: current coverage focuses on unit tests for pure helpers. Adding Playwright/Cypress coverage for the full search → detail → add to cart → remove flow would increase confidence.
-- **Deployment**: deploy to Vercel to fulfil the optional requirement.
