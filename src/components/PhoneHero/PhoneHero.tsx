@@ -22,7 +22,11 @@ export default function PhoneHero({ phone }: { phone: NormalizedPhoneDetail }) {
   const selectedStorageOption = storageOptions.find(
     (storage) => storage.capacity === selectedStorage,
   );
-  const displayPrice = selectedStorageOption?.price ?? basePrice;
+  const cheapest = storageOptions
+    .map((option) => option.price)
+    .filter((price): price is number => price !== null);
+  const fallbackPrice = cheapest.length > 0 ? Math.min(...cheapest) : basePrice;
+  const displayPrice = selectedStorageOption?.price ?? fallbackPrice;
 
   const canAdd = Boolean(
     selectedColorOption && selectedStorageOption && selectedStorageOption.price !== null,
@@ -70,7 +74,9 @@ export default function PhoneHero({ phone }: { phone: NormalizedPhoneDetail }) {
 
       <div className={styles['heading']}>
         <h1 className={styles['name']}>{name}</h1>
-        <p className={styles['price']}>From {formatPrice(displayPrice)}</p>
+        <p className={styles['price']}>
+          {selectedStorageOption ? formatPrice(displayPrice) : `From ${formatPrice(displayPrice)}`}
+        </p>
       </div>
 
       <div className={styles['selectors']}>
