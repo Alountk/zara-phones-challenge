@@ -1,0 +1,14 @@
+node_modules
+.next
+.swc
+.git
+.husky
+.env*
+!.env.example
+*.md
+.github
+Dockerfile
+docker-compose*.yml
+coverage
+tsconfig.tsbuildinfo
+.DS_Store
